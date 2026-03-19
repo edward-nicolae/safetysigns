@@ -1,0 +1,27 @@
+{
+  "id": "fire-exit-arrow-down",
+  "name": "Fire Exit Arrow Down",
+  "category": "Fire Safety Signs",
+  "subcategory": "Fire Exit Signs",
+  "code": "14002BJ-S",
+  "description": "This Fire Exit Arrow Down sign helps clearly indicate the direction of travel towards the nearest fire exit. Compliant with EN ISO 7010:2020 and BS 5499 standards.",
+  "standards": ["EN ISO 7010:2020", "BS 5499", "Safety Signs Regulations 1996"],
+  "image": "/images/fire-exit-arrow-down.png",
+  "sizes": [
+    {
+      "size": "300 x 100 mm",
+      "materials": [
+        {
+          "material": "Self Adhesive Vinyl",
+          "priceBreaks": [
+            { "minQty": 1, "price": 2.85 },
+            { "minQty": 2, "price": 2.75 },
+            { "minQty": 5, "price": 2.66 },
+            { "minQty": 10, "price": 2.56 },
+            { "minQty": 20, "price": 2.47 }
+          ]
+        }
+      ]
+    }
+  ]
+}
