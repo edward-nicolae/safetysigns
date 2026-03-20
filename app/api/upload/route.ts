@@ -1,5 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 const MAX_BYTES = 2 * 1024 * 1024;
@@ -18,18 +17,20 @@ export async function POST(request: Request) {
   }
 
   if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: "File too large" }, { status: 400 });
+    return NextResponse.json({ error: "File too large" }, { status: 500 });
   }
-
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadDir, { recursive: true });
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const fileName = `${Date.now()}-${safeName}`;
-  const destination = path.join(uploadDir, fileName);
 
-  const bytes = await file.arrayBuffer();
-  await writeFile(destination, Buffer.from(bytes));
+  try {
+    const blob = await put(fileName, file, {
+      access: "public",
+    });
 
-  return NextResponse.json({ url: `/uploads/${fileName}` }, { status: 200 });
+    return NextResponse.json({ url: blob.url }, { status: 200 });
+  } catch (error) {
+    console.error("Blob upload failed:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  }
 }
