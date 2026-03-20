@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { SignProduct } from "@/types/sign";
 import { useCart } from "@/components/providers/cart-provider";
 
@@ -31,19 +32,27 @@ export function CatalogGrid({ signs }: Props) {
             </h3>
             <p className="text-lg font-bold text-slate-900">GBP {sign.price.toFixed(2)}</p>
 
-            <button
-              onClick={() =>
-                addItem({
-                  id: sign.id,
-                  title: sign.title,
-                  price: sign.price,
-                  image: sign.image,
-                })
-              }
-              className="w-full rounded-md bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700"
-            >
-              Add to Cart
-            </button>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() =>
+                  addItem({
+                    id: sign.id,
+                    title: sign.title,
+                    price: sign.price,
+                    image: sign.image,
+                  })
+                }
+                className="rounded-md bg-brand-600 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+              >
+                Add to Cart
+              </button>
+              <Link
+                href={`/configure/${sign.id}`}
+                className="rounded-md border border-slate-300 px-3 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                Configure
+              </Link>
+            </div>
           </div>
         </article>
       ))}

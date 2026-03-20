@@ -1,9 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useCart } from "@/components/providers/cart-provider";
 
 export default function UploadPage() {
+  const router = useRouter();
+  const { setUploadedLogoPath } = useCart();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +43,7 @@ export default function UploadPage() {
 
     const payload = (await response.json()) as { url: string };
     setUploadedUrl(payload.url);
+    setUploadedLogoPath(payload.url);
     setIsUploading(false);
   };
 
@@ -76,6 +81,7 @@ export default function UploadPage() {
         ) : null}
 
         <button
+          onClick={() => router.push("/catalog")}
           disabled={!uploadedUrl || isUploading}
           className="mt-6 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
