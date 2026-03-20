@@ -1,0 +1,72 @@
+[
+  {
+    "id": "m-hard-hats-required",
+    "title": "Hard Hats Must Be Worn",
+    "category": "Mandatory",
+    "price": 12.5,
+    "image": "/images/sign-01.svg"
+  },
+  {
+    "id": "m-high-vis-required",
+    "title": "High Visibility Clothing Must Be Worn",
+    "category": "Mandatory",
+    "price": 14,
+    "image": "/images/sign-02.svg"
+  },
+  {
+    "id": "w-forklift-area",
+    "title": "Warning Forklift Trucks Operating",
+    "category": "Warning",
+    "price": 11.75,
+    "image": "/images/sign-03.svg"
+  },
+  {
+    "id": "w-high-voltage",
+    "title": "Warning High Voltage",
+    "category": "Warning",
+    "price": 13.2,
+    "image": "/images/sign-04.svg"
+  },
+  {
+    "id": "p-no-smoking",
+    "title": "No Smoking",
+    "category": "Prohibition",
+    "price": 9.9,
+    "image": "/images/sign-05.svg"
+  },
+  {
+    "id": "p-no-entry",
+    "title": "No Entry for Unauthorized Persons",
+    "category": "Prohibition",
+    "price": 10.8,
+    "image": "/images/sign-06.svg"
+  },
+  {
+    "id": "f-fire-exit-right",
+    "title": "Fire Exit Right Arrow",
+    "category": "Fire Safety",
+    "price": 15.5,
+    "image": "/images/sign-07.svg"
+  },
+  {
+    "id": "f-fire-extinguisher",
+    "title": "Fire Extinguisher Location",
+    "category": "Fire Safety",
+    "price": 13.95,
+    "image": "/images/sign-08.svg"
+  },
+  {
+    "id": "i-first-aid",
+    "title": "First Aid Point",
+    "category": "Information",
+    "price": 12.3,
+    "image": "/images/sign-09.svg"
+  },
+  {
+    "id": "i-assembly-point",
+    "title": "Emergency Assembly Point",
+    "category": "Information",
+    "price": 16,
+    "image": "/images/sign-10.svg"
+  }
+]
