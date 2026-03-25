@@ -11,7 +11,8 @@ import {
 } from "react";
 
 export type CartItem = {
-  id: string;
+  lineId: string;
+  signId: string;
   title: string;
   price: number;
   image: string;
@@ -19,29 +20,44 @@ export type CartItem = {
 };
 
 export type SignConfiguration = {
+  lineId: string;
   signId: string;
   logoPath: string;
   positionX: number;
   positionY: number;
   size: number;
+  text: string;
+  color: string;
 };
 
-type AddItemInput = Omit<CartItem, "quantity">;
+// Input for adding/identifying a product (no lineId — that's generated internally)
+export type AddItemInput = {
+  signId: string;
+  title: string;
+  price: number;
+  image: string;
+};
+
+type ConfigData = Omit<SignConfiguration, "lineId" | "signId">;
 
 type CartContextType = {
   items: CartItem[];
-  addItem: (item: AddItemInput) => void;
-  increaseQty: (id: string) => void;
-  decreaseQty: (id: string) => void;
-  removeItem: (id: string) => void;
+  // Manages a single unconfigured line per signId (merge by signId when no config)
+  setUnconfiguredQuantity: (item: AddItemInput, quantity: number) => void;
+  // Always creates a new line with a fresh lineId + attaches config
+  addConfiguredLine: (item: AddItemInput, config: ConfigData) => void;
+  // Creates or updates config on an existing cart line (no new cart item added)
+  updateConfiguredLine: (lineId: string, signId: string, config: ConfigData) => void;
+  // Line-level quantity controls (use lineId)
+  increaseQty: (lineId: string) => void;
+  decreaseQty: (lineId: string) => void;
+  removeItem: (lineId: string) => void;
   clearCart: () => void;
   itemCount: number;
   subtotal: number;
-  uploadedLogoPath: string | null;
-  setUploadedLogoPath: (path: string | null) => void;
   configurations: Record<string, SignConfiguration>;
-  saveConfiguration: (config: SignConfiguration) => void;
-  getConfiguration: (signId: string) => SignConfiguration | null;
+  removeConfiguration: (lineId: string) => void;
+  getConfiguration: (lineId: string) => SignConfiguration | null;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -49,89 +65,164 @@ const STORAGE_KEY = "safetysigns-cart";
 
 type PersistedCartState = {
   items: CartItem[];
-  uploadedLogoPath: string | null;
   configurations: Record<string, SignConfiguration>;
 };
 
+function generateLineId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `line-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [uploadedLogoPath, setUploadedLogoPath] = useState<string | null>(null);
   const [configurations, setConfigurations] = useState<Record<string, SignConfiguration>>({});
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
-      const parsed = JSON.parse(raw) as PersistedCartState | CartItem[];
+      const parsed = JSON.parse(raw) as PersistedCartState | unknown[];
 
       if (Array.isArray(parsed)) {
-        setItems(parsed);
+        // Legacy format: plain items array (old CartItem had `id` not `signId`/`lineId`)
+        const migrated: CartItem[] = (parsed as Record<string, unknown>[]).map((item) => ({
+          lineId: generateLineId(),
+          signId: String(item.signId ?? item.id ?? ""),
+          title: String(item.title ?? ""),
+          price: Number(item.price ?? 0),
+          image: String(item.image ?? ""),
+          quantity: Number(item.quantity ?? 1),
+        }));
+        setItems(migrated);
         return;
       }
 
       if (parsed && typeof parsed === "object") {
-        setItems(Array.isArray(parsed.items) ? parsed.items : []);
-        setUploadedLogoPath(parsed.uploadedLogoPath ?? null);
-        setConfigurations(parsed.configurations ?? {});
+        const state = parsed as PersistedCartState;
+        const rawItems = Array.isArray(state.items) ? state.items : [];
+
+        // Migrate items that used the old `id` field instead of `signId`/`lineId`
+        const migratedItems: CartItem[] = rawItems.map((item: Record<string, unknown>) => {
+          if (item.lineId && item.signId) return item as unknown as CartItem;
+          return {
+            lineId: generateLineId(),
+            signId: String(item.signId ?? item.id ?? ""),
+            title: String(item.title ?? ""),
+            price: Number(item.price ?? 0),
+            image: String(item.image ?? ""),
+            quantity: Number(item.quantity ?? 1),
+          };
+        });
+
+        setItems(migratedItems);
+        setConfigurations(state.configurations ?? {});
       }
     } catch {
       setItems([]);
-      setUploadedLogoPath(null);
       setConfigurations({});
     }
   }, []);
 
   useEffect(() => {
-    const stateToPersist: PersistedCartState = {
-      items,
-      uploadedLogoPath,
-      configurations,
-    };
+    const stateToPersist: PersistedCartState = { items, configurations };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToPersist));
-  }, [items, uploadedLogoPath, configurations]);
+  }, [items, configurations]);
 
-  const addItem = (item: AddItemInput) => {
-    setItems((prev) => {
-      const existing = prev.find((p) => p.id === item.id);
-      if (existing) {
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
+  const setUnconfiguredQuantity = useCallback(
+    (item: AddItemInput, quantity: number) => {
+      const normalized = Math.max(0, Math.floor(quantity));
+      setItems((prev) => {
+        const unconfiguredIdx = prev.findIndex(
+          (p) => p.signId === item.signId && !configurations[p.lineId],
         );
-      }
-      return [...prev, { ...item, quantity: 1 }];
-    });
-  };
 
-  const increaseQty = (id: string) => {
-    setItems((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p))
-    );
-  };
+        if (normalized === 0) {
+          if (unconfiguredIdx === -1) return prev;
+          return prev.filter((_, i) => i !== unconfiguredIdx);
+        }
 
-  const decreaseQty = (id: string) => {
-    setItems((prev) =>
-      prev
-        .map((p) => (p.id === id ? { ...p, quantity: p.quantity - 1 } : p))
-        .filter((p) => p.quantity > 0)
-    );
-  };
+        if (unconfiguredIdx !== -1) {
+          return prev.map((p, i) =>
+            i === unconfiguredIdx ? { ...p, ...item, quantity: normalized } : p,
+          );
+        }
 
-  const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((p) => p.id !== id));
-  };
+        return [...prev, { lineId: generateLineId(), ...item, quantity: normalized }];
+      });
+    },
+    [configurations],
+  );
 
-  const clearCart = () => setItems([]);
-
-  const saveConfiguration = (config: SignConfiguration) => {
+  const addConfiguredLine = (item: AddItemInput, config: ConfigData) => {
+    const lineId = generateLineId();
+    setItems((prev) => [...prev, { lineId, ...item, quantity: 1 }]);
     setConfigurations((prev) => ({
       ...prev,
-      [config.signId]: config,
+      [lineId]: { lineId, signId: item.signId, ...config },
     }));
   };
 
+  const updateConfiguredLine = (lineId: string, signId: string, config: ConfigData) => {
+    setConfigurations((prev) => {
+      const existing = prev[lineId];
+      if (existing) {
+        return { ...prev, [lineId]: { ...existing, ...config } };
+      }
+
+      return {
+        ...prev,
+        [lineId]: {
+          lineId,
+          signId,
+          ...config,
+        },
+      };
+    });
+  };
+
+  const increaseQty = (lineId: string) => {
+    setItems((prev) =>
+      prev.map((p) => (p.lineId === lineId ? { ...p, quantity: p.quantity + 1 } : p)),
+    );
+  };
+
+  const decreaseQty = (lineId: string) => {
+    setItems((prev) =>
+      prev
+        .map((p) => (p.lineId === lineId ? { ...p, quantity: p.quantity - 1 } : p))
+        .filter((p) => p.quantity > 0),
+    );
+  };
+
+  const removeItem = (lineId: string) => {
+    setItems((prev) => prev.filter((p) => p.lineId !== lineId));
+    setConfigurations((prev) => {
+      if (!prev[lineId]) return prev;
+      const next = { ...prev };
+      delete next[lineId];
+      return next;
+    });
+  };
+
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setConfigurations({});
+  }, []);
+
+  const removeConfiguration = useCallback((lineId: string) => {
+    setConfigurations((prev) => {
+      if (!prev[lineId]) return prev;
+      const next = { ...prev };
+      delete next[lineId];
+      return next;
+    });
+  }, []);
+
   const getConfiguration = useCallback(
-    (signId: string) => configurations[signId] ?? null,
-    [configurations]
+    (lineId: string) => configurations[lineId] ?? null,
+    [configurations],
   );
 
   const value = useMemo(() => {
@@ -140,20 +231,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     return {
       items,
-      addItem,
+      setUnconfiguredQuantity,
+      addConfiguredLine,
+      updateConfiguredLine,
       increaseQty,
       decreaseQty,
       removeItem,
       clearCart,
       itemCount,
       subtotal,
-      uploadedLogoPath,
-      setUploadedLogoPath,
       configurations,
-      saveConfiguration,
+      removeConfiguration,
       getConfiguration,
     };
-  }, [items, uploadedLogoPath, configurations, getConfiguration]);
+  }, [items, configurations, getConfiguration, clearCart, removeConfiguration, setUnconfiguredQuantity]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

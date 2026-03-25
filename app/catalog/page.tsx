@@ -1,10 +1,13 @@
-import signs from "@/data/signs.json";
 import { CatalogGrid } from "@/components/catalog/catalog-grid";
+import { getAllSigns } from "@/lib/sign-catalog";
 import type { SignProduct } from "@/types/sign";
 
-const catalogSigns = signs as SignProduct[];
+// Re-render when revalidatePath('/catalog') is called from the admin API
+export const revalidate = 0;
 
 export default function CatalogPage() {
+  const catalogSigns = getAllSigns() as SignProduct[];
+
   return (
     <section className="space-y-6">
       <div>

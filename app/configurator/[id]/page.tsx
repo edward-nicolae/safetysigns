@@ -3,6 +3,8 @@ import { SignConfigurator } from "@/components/configure/sign-configurator";
 import { getAllSigns } from "@/lib/sign-catalog";
 import type { SignProduct } from "@/types/sign";
 
+export const revalidate = 0;
+
 type PageProps = {
   params: {
     id: string;
@@ -12,8 +14,9 @@ type PageProps = {
   };
 };
 
-export default function ConfigureSignPage({ params, searchParams }: PageProps) {
-  const sign = (getAllSigns() as SignProduct[]).find((item) => item.id === params.id);
+export default function ConfiguratorSignPage({ params, searchParams }: PageProps) {
+  const allSigns = getAllSigns() as SignProduct[];
+  const sign = allSigns.find((item) => item.id === params.id);
 
   if (!sign) {
     notFound();

@@ -1,8 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
-  <rect width="800" height="500" rx="24" fill="#E2E8F0"/>
-  <rect x="40" y="40" width="720" height="420" rx="18" fill="#F8FAFC"/>
-  <rect x="88" y="110" width="624" height="70" rx="10" fill="#0F172A"/>
-  <text x="400" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF">SAFETY SIGN</text>
-  <text x="400" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="600" fill="#1E293B">Placeholder Product Image</text>
-  <text x="400" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#475569">Replace with real sign artwork</text>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#fff"/>
+  <circle cx="100" cy="100" r="88" fill="#D40000"/>
+  <rect x="26" y="86" width="148" height="28" rx="5" fill="white"/>
 </svg>

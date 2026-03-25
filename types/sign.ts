@@ -11,4 +11,7 @@ export interface SignProduct {
   category: SignCategory;
   price: number;
   image: string;
+  description?: string;
+  /** Any extra fields added via the admin UI */
+  [key: string]: unknown;
 }

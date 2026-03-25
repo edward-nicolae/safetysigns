@@ -1,8 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
-  <rect width="800" height="500" rx="24" fill="#E2E8F0"/>
-  <rect x="40" y="40" width="720" height="420" rx="18" fill="#F8FAFC"/>
-  <rect x="88" y="110" width="624" height="70" rx="10" fill="#0F172A"/>
-  <text x="400" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF">SAFETY SIGN</text>
-  <text x="400" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="600" fill="#1E293B">Placeholder Product Image</text>
-  <text x="400" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#475569">Replace with real sign artwork</text>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#006B2B"/>
+  <line x1="14" y1="78" x2="70" y2="78" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <polygon points="62,66 80,78 62,90" fill="white"/>
+  <line x1="186" y1="78" x2="130" y2="78" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <polygon points="138,66 120,78 138,90" fill="white"/>
+  <line x1="100" y1="14" x2="100" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <polygon points="88,48 100,66 112,48" fill="white"/>
+  <circle cx="55" cy="110" r="9" fill="white"/>
+  <path d="M46,122 L46,158 L55,158 L55,142 L64,142 L64,158 L73,158 L73,122 Q64,114 55,114 Q46,114 46,122Z" fill="white"/>
+  <circle cx="100" cy="110" r="9" fill="white"/>
+  <path d="M91,122 L91,158 L100,158 L100,142 L109,142 L109,158 L118,158 L118,122 Q109,114 100,114 Q91,114 91,122Z" fill="white"/>
+  <circle cx="145" cy="110" r="9" fill="white"/>
+  <path d="M136,122 L136,158 L145,158 L145,142 L154,142 L154,158 L163,158 L163,122 Q154,114 145,114 Q136,114 136,122Z" fill="white"/>
 </svg>

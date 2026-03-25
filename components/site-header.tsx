@@ -7,8 +7,10 @@ import { useCart } from "@/components/providers/cart-provider";
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/catalog", label: "Catalog" },
+  { href: "/compliance", label: "Compliance" },
   { href: "/cart", label: "Cart" },
   { href: "/about", label: "About" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export function SiteHeader() {

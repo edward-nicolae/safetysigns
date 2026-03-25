@@ -1,0 +1,14 @@
+{
+  "cascuta-de-protectie-smechera": {
+    "title": "Cascuta de protectie smechera",
+    "category": "Mandatory",
+    "price": 4,
+    "description": "Super casca de protectie dovleac"
+  },
+  "m-hard-hats-required": {
+    "title": "Hard Hats Must Be Worn",
+    "category": "Mandatory",
+    "price": 12.5,
+    "description": ""
+  }
+}

@@ -1,92 +1,38 @@
-"use client";
-
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useCart } from "@/components/providers/cart-provider";
+import Link from "next/link";
 
 export default function UploadPage() {
-  const router = useRouter();
-  const { setUploadedLogoPath } = useCart();
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const isValidType = ["image/png", "image/jpeg", "image/svg+xml"].includes(file.type);
-    if (!isValidType) {
-      setError("Only PNG, JPG, and SVG files are allowed.");
-      return;
-    }
-
-    setError(null);
-    setPreviewUrl(URL.createObjectURL(file));
-    setIsUploading(true);
-
-    const formData = new FormData();
-    formData.append("logo", file);
-
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      setError("Upload failed. Please try again.");
-      setIsUploading(false);
-      return;
-    }
-
-    const payload = (await response.json()) as { url: string };
-    setUploadedUrl(payload.url);
-    setUploadedLogoPath(payload.url);
-    setIsUploading(false);
-  };
-
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Logo Upload</h1>
-      <p className="text-slate-600">Upload your company logo in PNG, JPG, or SVG format.</p>
+    <section className="mx-auto max-w-2xl space-y-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <div className="space-y-3">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          Logo upload moved
+        </h1>
+        <p className="text-slate-600">
+          Logos are no longer uploaded globally for the entire cart. Each product now has its own
+          dedicated configurator and its own logo upload.
+        </p>
+      </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-6">
-        <input
-          type="file"
-          accept=".png,.jpg,.jpeg,.svg"
-          onChange={onFileChange}
-          className="block w-full text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-brand-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-brand-700"
-        />
+      <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <p className="text-sm text-slate-700">
+          Open any product, then go to its configurator to upload and position the logo only for
+          that item.
+        </p>
+      </div>
 
-        {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
-
-        {previewUrl ? (
-          <div className="mt-6">
-            <p className="mb-2 text-sm font-medium text-slate-700">Preview</p>
-            <Image
-              src={previewUrl}
-              alt="Uploaded logo preview"
-              width={240}
-              height={240}
-              unoptimized
-              className="max-h-48 w-auto rounded-md border border-slate-200 bg-slate-50 p-2"
-            />
-          </div>
-        ) : null}
-
-        {uploadedUrl ? (
-          <p className="mt-4 text-sm text-green-700">Saved to {uploadedUrl}</p>
-        ) : null}
-
-        <button
-          onClick={() => router.push("/catalog")}
-          disabled={!uploadedUrl || isUploading}
-          className="mt-6 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Link
+          href="/catalog"
+          className="rounded-lg bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-brand-700"
         >
-          Proceed to Order
-        </button>
+          Browse Catalog
+        </Link>
+        <Link
+          href="/cart"
+          className="rounded-lg border border-slate-300 px-5 py-2.5 text-center text-sm font-semibold text-slate-700 hover:bg-slate-100"
+        >
+          Go to Cart
+        </Link>
       </div>
     </section>
   );
