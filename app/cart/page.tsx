@@ -54,30 +54,34 @@ export default function CartPage() {
                       <Image src={item.image} alt={item.title} fill className="object-cover transition hover:opacity-80" />
                       {configuration ? (
                         <>
-                          <div
-                            className="absolute"
-                            style={{
-                              left: `${configuration.positionX}%`,
-                              top: `${configuration.positionY}%`,
-                              width: `${configuration.size}%`,
-                              transform: "translate(-50%, -50%)",
-                            }}
-                          >
-                            <Image
-                              src={configuration.logoPath}
-                              alt="Configured logo"
-                              width={240}
-                              height={240}
-                              unoptimized
-                              className="h-auto w-full object-contain drop-shadow"
-                            />
-                          </div>
-                          <p
-                            className="pointer-events-none absolute bottom-1 left-1/2 w-[92%] -translate-x-1/2 text-center text-[9px] font-semibold leading-tight"
-                            style={{ color: configuration.color }}
-                          >
-                            {configuration.text || "SITE SAFETY"}
-                          </p>
+                          {configuration.logoPath && (
+                            <div
+                              className="absolute"
+                              style={{
+                                left: `${configuration.positionX}%`,
+                                top: `${configuration.positionY}%`,
+                                width: `${configuration.size}%`,
+                                transform: "translate(-50%, -50%)",
+                              }}
+                            >
+                              <Image
+                                src={configuration.logoPath}
+                                alt="Configured logo"
+                                width={240}
+                                height={240}
+                                unoptimized
+                                className="h-auto w-full object-contain drop-shadow"
+                              />
+                            </div>
+                          )}
+                          {configuration.text && (
+                            <p
+                              className="pointer-events-none absolute bottom-1 left-1/2 w-[92%] -translate-x-1/2 text-center text-[9px] font-semibold leading-tight"
+                              style={{ color: configuration.color }}
+                            >
+                              {configuration.text}
+                            </p>
+                          )}
                         </>
                       ) : null}
                     </Link>
@@ -87,6 +91,14 @@ export default function CartPage() {
                     <Link href={`/catalog/${item.signId}`} className="hover:text-brand-600">
                       <h2 className="font-semibold text-slate-900">{item.title}</h2>
                     </Link>
+                    {configuration?.materialLabel && (
+                      <p className="mt-0.5 text-xs text-slate-500">
+                        {configuration.materialLabel}
+                        {configuration.width && configuration.height
+                          ? ` · ${configuration.width} × ${configuration.height} mm`
+                          : ""}
+                      </p>
+                    )}
                     <p className="mt-1 text-sm text-slate-600">GBP {item.price.toFixed(2)} each</p>
                     <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
                       <Link
@@ -198,31 +210,35 @@ export default function CartPage() {
             <div className="relative mx-auto aspect-[4/3] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
               <Image src={zoomItem.image} alt={zoomItem.title} fill className="object-cover" />
 
-              <div
-                className="absolute"
-                style={{
-                  left: `${zoomConfiguration.positionX}%`,
-                  top: `${zoomConfiguration.positionY}%`,
-                  width: `${zoomConfiguration.size}%`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              >
-                <Image
-                  src={zoomConfiguration.logoPath}
-                  alt="Configured logo"
-                  width={500}
-                  height={500}
-                  unoptimized
-                  className="h-auto w-full object-contain drop-shadow-md"
-                />
-              </div>
+              {zoomConfiguration.logoPath && (
+                <div
+                  className="absolute"
+                  style={{
+                    left: `${zoomConfiguration.positionX}%`,
+                    top: `${zoomConfiguration.positionY}%`,
+                    width: `${zoomConfiguration.size}%`,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <Image
+                    src={zoomConfiguration.logoPath}
+                    alt="Configured logo"
+                    width={500}
+                    height={500}
+                    unoptimized
+                    className="h-auto w-full object-contain drop-shadow-md"
+                  />
+                </div>
+              )}
 
-              <p
-                className="pointer-events-none absolute bottom-4 left-1/2 w-[88%] -translate-x-1/2 text-center text-base font-semibold sm:text-lg"
-                style={{ color: zoomConfiguration.color }}
-              >
-                {zoomConfiguration.text || "SITE SAFETY"}
-              </p>
+              {zoomConfiguration.text && (
+                <p
+                  className="pointer-events-none absolute bottom-4 left-1/2 w-[88%] -translate-x-1/2 text-center text-base font-semibold sm:text-lg"
+                  style={{ color: zoomConfiguration.color }}
+                >
+                  {zoomConfiguration.text}
+                </p>
+              )}
             </div>
           </div>
         </div>

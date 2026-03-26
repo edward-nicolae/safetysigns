@@ -829,5 +829,82 @@
       "itemsCount": 5,
       "subtotal": 72.75
     }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T11:10:33.987Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T11:10:33.986Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-26T11:10:36.182Z",
+    "payload": {
+      "standardId": "uk-construction-baseline",
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-26T11:10:38.203Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-26T11:10:39.485Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T11:17:38.337Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T11:17:38.337Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-26T11:17:39.787Z",
+    "payload": {
+      "standardId": "uk-construction-baseline",
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-26T11:17:41.812Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
   }
 ]

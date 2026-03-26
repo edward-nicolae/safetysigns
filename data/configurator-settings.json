@@ -1,0 +1,191 @@
+{
+  "materials": [
+    {
+      "id": "vinyl",
+      "label": "Self Adhesive Vinyl",
+      "description": "Flexible & easy to apply indoors",
+      "priceMultiplier": 1,
+      "popular": true
+    },
+    {
+      "id": "rigid-plastic",
+      "label": "Rigid Plastic",
+      "description": "Durable semi-rigid board",
+      "priceMultiplier": 1.35,
+      "popular": false
+    },
+    {
+      "id": "aluminium",
+      "label": "Aluminium",
+      "description": "Weatherproof metal sign",
+      "priceMultiplier": 1.8,
+      "popular": false
+    },
+    {
+      "id": "photoluminescent",
+      "label": "Photoluminescent",
+      "description": "Glows in the dark for emergencies",
+      "priceMultiplier": 2.2,
+      "popular": false
+    }
+  ],
+  "sizes": [
+    {
+      "id": "p-75x100",
+      "width": 75,
+      "height": 100,
+      "orientation": "portrait",
+      "areaMultiplier": 0.7
+    },
+    {
+      "id": "p-100x150",
+      "width": 100,
+      "height": 150,
+      "orientation": "portrait",
+      "areaMultiplier": 0.85
+    },
+    {
+      "id": "p-150x200",
+      "width": 150,
+      "height": 200,
+      "orientation": "portrait",
+      "areaMultiplier": 1
+    },
+    {
+      "id": "p-200x300",
+      "width": 200,
+      "height": 300,
+      "orientation": "portrait",
+      "areaMultiplier": 1.45
+    },
+    {
+      "id": "p-300x400",
+      "width": 300,
+      "height": 400,
+      "orientation": "portrait",
+      "areaMultiplier": 2.1
+    },
+    {
+      "id": "l-100x75",
+      "width": 100,
+      "height": 75,
+      "orientation": "landscape",
+      "areaMultiplier": 0.7
+    },
+    {
+      "id": "l-150x100",
+      "width": 150,
+      "height": 100,
+      "orientation": "landscape",
+      "areaMultiplier": 0.85
+    },
+    {
+      "id": "l-200x150",
+      "width": 200,
+      "height": 150,
+      "orientation": "landscape",
+      "areaMultiplier": 1
+    },
+    {
+      "id": "l-300x200",
+      "width": 300,
+      "height": 200,
+      "orientation": "landscape",
+      "areaMultiplier": 1.45
+    },
+    {
+      "id": "l-400x300",
+      "width": 400,
+      "height": 300,
+      "orientation": "landscape",
+      "areaMultiplier": 2.1
+    },
+    {
+      "id": "s-100x100",
+      "width": 100,
+      "height": 100,
+      "orientation": "square",
+      "areaMultiplier": 0.75
+    },
+    {
+      "id": "s-150x150",
+      "width": 150,
+      "height": 150,
+      "orientation": "square",
+      "areaMultiplier": 0.9
+    },
+    {
+      "id": "s-200x200",
+      "width": 200,
+      "height": 200,
+      "orientation": "square",
+      "areaMultiplier": 1.2
+    },
+    {
+      "id": "s-300x300",
+      "width": 300,
+      "height": 300,
+      "orientation": "square",
+      "areaMultiplier": 1.9
+    }
+  ],
+  "qtyTiers": [
+    {
+      "min": 1,
+      "max": 1,
+      "discountPct": 0
+    },
+    {
+      "min": 2,
+      "max": 4,
+      "discountPct": 7
+    },
+    {
+      "min": 5,
+      "max": 9,
+      "discountPct": 12
+    },
+    {
+      "min": 10,
+      "max": 19,
+      "discountPct": 17
+    },
+    {
+      "min": 20,
+      "max": null,
+      "discountPct": 23
+    }
+  ],
+  "colorSchemes": [
+    {
+      "id": "white",
+      "label": "White",
+      "bg": "#ffffff",
+      "fg": "#1e293b"
+    },
+    {
+      "id": "yellow",
+      "label": "Yellow",
+      "bg": "#fde047",
+      "fg": "#000000"
+    },
+    {
+      "id": "red",
+      "label": "Red",
+      "bg": "#dc2626",
+      "fg": "#ffffff"
+    },
+    {
+      "id": "blue",
+      "label": "Blue",
+      "bg": "#1d4ed8",
+      "fg": "#ffffff"
+    },
+    {
+      "id": "green",
+      "label": "Green",
+      "bg": "#16a34a",
+      "fg": "#ffffff"
+    }
+  ]
+}

@@ -28,6 +28,15 @@ export type SignConfiguration = {
   size: number;
   text: string;
   color: string;
+  // Wizard-set fields
+  materialId?: string;
+  materialLabel?: string;
+  orientation?: "portrait" | "landscape" | "square";
+  sizeId?: string;
+  width?: number;
+  height?: number;
+  schemeId?: string;
+  schemeColor?: string;
 };
 
 // Input for adding/identifying a product (no lineId — that's generated internally)
@@ -45,7 +54,7 @@ type CartContextType = {
   // Manages a single unconfigured line per signId (merge by signId when no config)
   setUnconfiguredQuantity: (item: AddItemInput, quantity: number) => void;
   // Always creates a new line with a fresh lineId + attaches config
-  addConfiguredLine: (item: AddItemInput, config: ConfigData) => void;
+  addConfiguredLine: (item: AddItemInput, config: ConfigData, quantity?: number) => void;
   // Creates or updates config on an existing cart line (no new cart item added)
   updateConfiguredLine: (lineId: string, signId: string, config: ConfigData) => void;
   // Line-level quantity controls (use lineId)
@@ -155,9 +164,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [configurations],
   );
 
-  const addConfiguredLine = (item: AddItemInput, config: ConfigData) => {
+  const addConfiguredLine = (item: AddItemInput, config: ConfigData, quantity = 1) => {
     const lineId = generateLineId();
-    setItems((prev) => [...prev, { lineId, ...item, quantity: 1 }]);
+    setItems((prev) => [...prev, { lineId, ...item, quantity: Math.max(1, quantity) }]);
     setConfigurations((prev) => ({
       ...prev,
       [lineId]: { lineId, signId: item.signId, ...config },

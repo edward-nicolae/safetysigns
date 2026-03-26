@@ -701,6 +701,12 @@ export default function AdminPage() {
             >
               Compliance Rules
             </Link>
+            <Link
+              href="/admin/configurator"
+              className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            >
+              Configurator Settings
+            </Link>
             <button
               onClick={() => setIsCreateOpen((prev) => !prev)}
               className="rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"

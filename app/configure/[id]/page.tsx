@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { SignConfigurator } from "@/components/configure/sign-configurator";
 import { getAllSigns } from "@/lib/sign-catalog";
+import { getConfiguratorSettings } from "@/lib/configurator-config";
 import type { SignProduct } from "@/types/sign";
 
 type PageProps = {
@@ -19,5 +20,6 @@ export default function ConfigureSignPage({ params, searchParams }: PageProps) {
     notFound();
   }
 
-  return <SignConfigurator sign={sign} lineId={searchParams.lineId} />;
+  const settings = getConfiguratorSettings();
+  return <SignConfigurator sign={sign} lineId={searchParams.lineId} settings={settings} />;
 }
