@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { useCart } from "@/components/providers/cart-provider";
 
 export default function CartPage() {
@@ -10,6 +11,18 @@ export default function CartPage() {
   const [zoomItemId, setZoomItemId] = useState<string | null>(null);
   const zoomItem = zoomItemId ? items.find((item) => item.lineId === zoomItemId) ?? null : null;
   const zoomConfiguration = zoomItem ? getConfiguration(zoomItem.lineId) : null;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const hasComplianceSession = window.sessionStorage.getItem("safetysigns-compliance-session") === "1";
+    const alreadyTracked = window.sessionStorage.getItem("safetysigns-compliance-cart-tracked") === "1";
+
+    if (hasComplianceSession && !alreadyTracked) {
+      trackEvent("compliance_go_to_cart", { source: "cart-page-visit" });
+      window.sessionStorage.setItem("safetysigns-compliance-cart-tracked", "1");
+    }
+  }, []);
 
   return (
     <section className="space-y-6">
@@ -137,6 +150,19 @@ export default function CartPage() {
             </p>
             <Link
               href="/checkout/success"
+              onClick={() => {
+                if (typeof window === "undefined") return;
+                const hasComplianceSession =
+                  window.sessionStorage.getItem("safetysigns-compliance-session") === "1";
+
+                if (hasComplianceSession) {
+                  trackEvent("compliance_checkout_started", {
+                    source: "cart-finalize",
+                    itemsCount: items.length,
+                    subtotal: Number(subtotal.toFixed(2)),
+                  });
+                }
+              }}
               className="mt-4 inline-flex rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
             >
               Finalize Order

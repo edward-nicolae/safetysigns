@@ -1,0 +1,833 @@
+[
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:28:17.778Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:28:17.778Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:28:20.291Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_full_pack",
+    "ts": "2026-03-25T23:28:30.283Z",
+    "payload": {
+      "recommendationCount": 10,
+      "suggestedUnits": 18,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:29:40.878Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:29:40.879Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:29:57.292Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "warehouse",
+      "mustHaveCount": 6,
+      "recommendedCount": 1,
+      "estimatedSubtotal": 311.85
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:30:30.027Z",
+    "payload": {
+      "mustHaveCount": 6,
+      "suggestedUnits": 9,
+      "estimatedSubtotal": 114.55
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:34:09.207Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:34:09.206Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:34:11.295Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:34:15.564Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:34:17.040Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:34:19.700Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:34:50.553Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:34:50.554Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:34:55.620Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "manufacturing",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:35:00.723Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:35:02.603Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:35:47.371Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:13.870Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:13.869Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:38:20.212Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "mixed",
+      "mustHaveCount": 7,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 213.25
+    }
+  },
+  {
+    "event": "compliance_add_full_pack",
+    "ts": "2026-03-25T23:38:22.356Z",
+    "payload": {
+      "recommendationCount": 9,
+      "suggestedUnits": 16,
+      "estimatedSubtotal": 213.25
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:38:25.516Z",
+    "payload": {
+      "mustHaveCount": 7,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:38:28.708Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 9,
+      "subtotal": 213.25
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-25T23:38:28.801Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 16,
+      "subtotal": 213.25
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:33.412Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:33.413Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:38:35.588Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:38:36.963Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:38:37.571Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:38:37.592Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:38:39.219Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:58.733Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:38:58.734Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:39:00.548Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:39:01.899Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:39:02.843Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:39:02.918Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:39:05.515Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:39:39.615Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:39:39.616Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:39:43.485Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:40:13.339Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:40:14.750Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:40:16.836Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:40:25.501Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:40:25.502Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:40:26.940Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_full_pack",
+    "ts": "2026-03-25T23:40:27.811Z",
+    "payload": {
+      "recommendationCount": 10,
+      "suggestedUnits": 18,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:40:28.923Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:40:28.945Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:40:30.675Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 10,
+      "subtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:49:32.721Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:49:32.720Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:49:34.132Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:49:35.428Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:49:37.378Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:49:38.900Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:49:47.868Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:49:47.869Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:49:49.131Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:49:50.131Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:49:51.707Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:49:51.737Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:49:53.116Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-25T23:49:53.129Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 15,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:50:04.284Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:50:04.284Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:50:06.445Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:50:07.763Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:50:08.435Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:50:08.491Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:50:10.188Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-25T23:50:10.244Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 15,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:50:23.077Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:50:23.077Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:50:25.076Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:50:25.844Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:50:26.747Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "source": "assessment-button"
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:50:26.768Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:50:28.340Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-25T23:50:28.345Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 15,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:51:03.776Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-25T23:51:03.776Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-25T23:51:05.084Z",
+    "payload": {
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 8,
+      "recommendedCount": 2,
+      "estimatedSubtotal": 233.05
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-25T23:51:06.676Z",
+    "payload": {
+      "mustHaveCount": 8,
+      "suggestedUnits": 15,
+      "estimatedSubtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-25T23:51:07.645Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-25T23:51:09.164Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 8,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-25T23:51:09.249Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 15,
+      "subtotal": 195.45
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T00:16:53.412Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_started",
+    "ts": "2026-03-26T00:16:53.411Z",
+    "payload": {
+      "source": "page-load"
+    }
+  },
+  {
+    "event": "compliance_assessment_completed",
+    "ts": "2026-03-26T00:17:15.421Z",
+    "payload": {
+      "standardId": "uk-construction-baseline",
+      "jurisdiction": "uk",
+      "siteType": "construction",
+      "mustHaveCount": 3,
+      "recommendedCount": 1,
+      "estimatedSubtotal": 88.75
+    }
+  },
+  {
+    "event": "compliance_add_must_have_pack",
+    "ts": "2026-03-26T00:17:49.979Z",
+    "payload": {
+      "mustHaveCount": 3,
+      "suggestedUnits": 5,
+      "estimatedSubtotal": 72.75
+    }
+  },
+  {
+    "event": "compliance_go_to_cart",
+    "ts": "2026-03-26T00:17:51.653Z",
+    "payload": {
+      "source": "cart-page-visit"
+    }
+  },
+  {
+    "event": "compliance_checkout_started",
+    "ts": "2026-03-26T00:18:50.211Z",
+    "payload": {
+      "source": "cart-finalize",
+      "itemsCount": 3,
+      "subtotal": 72.75
+    }
+  },
+  {
+    "event": "compliance_checkout_completed",
+    "ts": "2026-03-26T00:18:50.775Z",
+    "payload": {
+      "source": "checkout-success",
+      "itemsCount": 5,
+      "subtotal": 72.75
+    }
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "uk-construction-baseline": {
+    "r-assembly": {
+      "enabled": true,
+      "level": "recommended",
+      "signId": "i-assembly-point",
+      "quantity": {
+        "mode": "if-field-gte",
+        "field": "floorCount",
+        "threshold": 2,
+        "whenTrue": 2,
+        "whenFalse": 1
+      },
+      "rationale": "Assembly points improve evacuation coordination and site readiness.",
+      "sourceRef": "UK emergency planning good practice"
+    }
+  }
+}

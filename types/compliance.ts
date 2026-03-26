@@ -35,7 +35,36 @@ export type ComplianceZone =
   | "first-aid"
   | "assembly";
 
-export type ComplianceRule = {
+export type AssessmentField = keyof ComplianceAnswers;
+
+export type Condition =
+  | { type: "always" }
+  | { type: "field-true"; field: AssessmentField }
+  | { type: "field-equals"; field: AssessmentField; value: string | number | boolean }
+  | { type: "field-in"; field: AssessmentField; values: Array<string | number | boolean> }
+  | { type: "all"; conditions: Condition[] }
+  | { type: "any"; conditions: Condition[] };
+
+export type QuantityStrategy =
+  | { mode: "fixed"; value: number }
+  | { mode: "per-exit"; min?: number }
+  | { mode: "per-floor"; min?: number }
+  | { mode: "floors-plus-exits"; min?: number }
+  | {
+      mode: "if-field-gte";
+      field: AssessmentField;
+      threshold: number;
+      whenTrue: number;
+      whenFalse: number;
+    }
+  | {
+      mode: "if-boolean-field";
+      field: AssessmentField;
+      whenTrue: number;
+      whenFalse: number;
+    };
+
+export type ComplianceRuleTemplate = {
   id: string;
   title: string;
   level: RecommendationLevel;
@@ -43,9 +72,37 @@ export type ComplianceRule = {
   zone: ComplianceZone;
   rationale: string;
   sourceRef: string;
-  match: (answers: ComplianceAnswers) => boolean;
-  quantity: (answers: ComplianceAnswers) => number;
+  trigger: Condition;
+  quantity: QuantityStrategy;
+  triggerDescription: string;
+  quantityDescription: string;
 };
+
+export type ComplianceStandardStatus = "draft" | "reviewed" | "published";
+
+export type ComplianceStandard = {
+  id: string;
+  name: string;
+  jurisdiction: Jurisdiction;
+  industry: SiteType | "general";
+  version: string;
+  status: ComplianceStandardStatus;
+  description: string;
+  reviewedAt?: string;
+  rules: ComplianceRuleTemplate[];
+  disclaimer: string;
+};
+
+export type ComplianceRuleOverride = {
+  enabled?: boolean;
+  level?: RecommendationLevel;
+  signId?: string;
+  quantity?: QuantityStrategy;
+  rationale?: string;
+  sourceRef?: string;
+};
+
+export type ComplianceOverridesByStandard = Record<string, Record<string, ComplianceRuleOverride>>;
 
 export type ComplianceRecommendation = {
   ruleId: string;

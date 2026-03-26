@@ -1,0 +1,168 @@
+[
+  {
+    "id": "uk-construction-baseline",
+    "name": "UK Construction Baseline",
+    "jurisdiction": "uk",
+    "industry": "construction",
+    "version": "1.0.0",
+    "status": "published",
+    "description": "Baseline signage policy for UK construction-focused sites.",
+    "reviewedAt": "2026-03-26",
+    "disclaimer": "Guidance only, not legal advice. Always validate final signage plan with a qualified H&S professional.",
+    "rules": [
+      {
+        "id": "r-hard-hat",
+        "title": "Hard hat mandatory areas",
+        "level": "must-have",
+        "signId": "m-hard-hats-required",
+        "zone": "ppe-entry",
+        "rationale": "Sites where head protection is required should post mandatory PPE signage at relevant entry points.",
+        "sourceRef": "UK H&S PPE guidance (workplace risk-based control)",
+        "trigger": { "type": "field-true", "field": "requiresHardHats" },
+        "quantity": { "mode": "per-exit", "min": 1 },
+        "triggerDescription": "Activates when hard hats are required on site.",
+        "quantityDescription": "One sign per main exit, minimum 1."
+      },
+      {
+        "id": "r-high-vis",
+        "title": "High-visibility clothing mandatory",
+        "level": "must-have",
+        "signId": "m-high-vis-required",
+        "zone": "ppe-entry",
+        "rationale": "Where moving vehicles or visibility risks exist, high-vis PPE signage is typically required.",
+        "sourceRef": "UK H&S PPE guidance (visibility risk controls)",
+        "trigger": {
+          "type": "any",
+          "conditions": [
+            { "type": "field-true", "field": "requiresHighVis" },
+            { "type": "field-true", "field": "hasForklifts" }
+          ]
+        },
+        "quantity": { "mode": "per-exit", "min": 1 },
+        "triggerDescription": "Activates when high-vis PPE is required or forklifts are present.",
+        "quantityDescription": "One sign per main exit, minimum 1."
+      },
+      {
+        "id": "r-forklift",
+        "title": "Forklift traffic warning",
+        "level": "must-have",
+        "signId": "w-forklift-area",
+        "zone": "traffic-routes",
+        "rationale": "Vehicle-pedestrian interaction zones require clear warning signage.",
+        "sourceRef": "UK workplace transport risk guidance",
+        "trigger": { "type": "field-true", "field": "hasForklifts" },
+        "quantity": { "mode": "per-exit", "min": 2 },
+        "triggerDescription": "Activates when forklift traffic is present.",
+        "quantityDescription": "One sign per main exit, minimum 2."
+      },
+      {
+        "id": "r-high-voltage",
+        "title": "Electrical hazard warning",
+        "level": "must-have",
+        "signId": "w-high-voltage",
+        "zone": "electrical-areas",
+        "rationale": "Areas with electrical hazards should be marked with warning signage.",
+        "sourceRef": "UK Electricity at Work principles",
+        "trigger": { "type": "field-true", "field": "hasElectricalHazards" },
+        "quantity": { "mode": "fixed", "value": 2 },
+        "triggerDescription": "Activates when electrical hazard zones are declared.",
+        "quantityDescription": "Fixed quantity of 2 signs."
+      },
+      {
+        "id": "r-no-smoking",
+        "title": "No smoking in hazardous/storage zones",
+        "level": "must-have",
+        "signId": "p-no-smoking",
+        "zone": "flammable-storage",
+        "rationale": "Flammable material areas should enforce smoking restrictions with visible prohibition signs.",
+        "sourceRef": "UK fire safety and dangerous substances principles",
+        "trigger": {
+          "type": "any",
+          "conditions": [
+            { "type": "field-true", "field": "hasFlammables" },
+            { "type": "field-in", "field": "siteType", "values": ["manufacturing", "warehouse"] }
+          ]
+        },
+        "quantity": { "mode": "per-exit", "min": 2 },
+        "triggerDescription": "Activates for flammable materials or high-risk industrial/warehouse site types.",
+        "quantityDescription": "One sign per main exit, minimum 2."
+      },
+      {
+        "id": "r-no-entry",
+        "title": "Restricted access",
+        "level": "recommended",
+        "signId": "p-no-entry",
+        "zone": "restricted-areas",
+        "rationale": "Restricted zones should be clearly identified to reduce unauthorized access.",
+        "sourceRef": "UK workplace safety management good practice",
+        "trigger": { "type": "field-true", "field": "hasRestrictedAreas" },
+        "quantity": { "mode": "fixed", "value": 2 },
+        "triggerDescription": "Activates when restricted areas exist on site.",
+        "quantityDescription": "Fixed quantity of 2 signs."
+      },
+      {
+        "id": "r-fire-exit",
+        "title": "Fire exit direction",
+        "level": "must-have",
+        "signId": "f-fire-exit-right",
+        "zone": "fire-points",
+        "rationale": "Escape routes should include clear directional exit signage.",
+        "sourceRef": "UK fire safety order principles",
+        "trigger": { "type": "always" },
+        "quantity": { "mode": "floors-plus-exits", "min": 2 },
+        "triggerDescription": "Always active for baseline emergency route coverage.",
+        "quantityDescription": "Floors + exits, minimum 2 signs."
+      },
+      {
+        "id": "r-extinguisher",
+        "title": "Fire extinguisher location",
+        "level": "must-have",
+        "signId": "f-fire-extinguisher",
+        "zone": "fire-points",
+        "rationale": "Fire-fighting equipment points should be clearly marked.",
+        "sourceRef": "UK fire safety signage good practice",
+        "trigger": { "type": "always" },
+        "quantity": { "mode": "per-floor", "min": 1 },
+        "triggerDescription": "Always active for baseline fire equipment marking.",
+        "quantityDescription": "One sign per floor, minimum 1."
+      },
+      {
+        "id": "r-first-aid",
+        "title": "First aid point",
+        "level": "must-have",
+        "signId": "i-first-aid",
+        "zone": "first-aid",
+        "rationale": "First aid locations should be clearly identifiable for workers and visitors.",
+        "sourceRef": "UK first-aid-at-work principles",
+        "trigger": { "type": "always" },
+        "quantity": {
+          "mode": "if-field-gte",
+          "field": "floorCount",
+          "threshold": 2,
+          "whenTrue": 2,
+          "whenFalse": 1
+        },
+        "triggerDescription": "Always active for baseline first aid visibility.",
+        "quantityDescription": "2 signs when floor count is 2+, otherwise 1."
+      },
+      {
+        "id": "r-assembly",
+        "title": "Emergency assembly point",
+        "level": "recommended",
+        "signId": "i-assembly-point",
+        "zone": "assembly",
+        "rationale": "Assembly points improve evacuation coordination and site readiness.",
+        "sourceRef": "UK emergency planning good practice",
+        "trigger": { "type": "always" },
+        "quantity": {
+          "mode": "if-boolean-field",
+          "field": "hasPublicVisitors",
+          "whenTrue": 2,
+          "whenFalse": 1
+        },
+        "triggerDescription": "Always active for evacuation planning.",
+        "quantityDescription": "2 signs with visitors/public, otherwise 1."
+      }
+    ]
+  }
+]

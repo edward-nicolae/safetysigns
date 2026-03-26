@@ -23,6 +23,19 @@ export function trackEvent(event: string, payload: AnalyticsPayload = {}): void 
     window.dataLayer.push(entry);
   }
 
+  try {
+    void fetch("/api/analytics/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ event, ts: entry.ts, payload }),
+      keepalive: true,
+    });
+  } catch {
+    // Avoid disrupting UX if analytics transport fails.
+  }
+
   // Useful fallback while no analytics provider is connected.
   console.log("[analytics]", entry);
 }

@@ -1,8 +1,12 @@
-import { complianceRules, UK_BASELINE_DISCLAIMER } from "@/data/compliance-rules";
 import type { SignProduct } from "@/types/sign";
 import type {
+  ComplianceRuleTemplate,
+  ComplianceRuleOverride,
+  ComplianceStandard,
+  Condition,
   ComplianceAnswers,
   ComplianceZone,
+  QuantityStrategy,
   ComplianceRecommendation,
   RecommendationLevel,
 } from "@/types/compliance";
@@ -21,37 +25,43 @@ export type ComplianceResult = {
   zoneSummary: ZoneSummary[];
   subtotalEstimate: number;
   disclaimer: string;
+  standardName: string;
+  standardVersion: string;
 };
 
 export function buildComplianceRecommendations(
   answers: ComplianceAnswers,
   signs: SignProduct[],
+  standard: ComplianceStandard,
+  overridesByRule: Record<string, ComplianceRuleOverride> = {},
 ): ComplianceResult {
   const signMap = new Map(signs.map((sign) => [sign.id, sign]));
 
   const recommendations: ComplianceRecommendation[] = [];
 
-  for (const rule of complianceRules) {
-    if (!rule.match(answers)) {
+  for (const rule of standard.rules) {
+    const effectiveRule = applyRuleOverride(rule, overridesByRule[rule.id]);
+
+    if (!evaluateCondition(effectiveRule.trigger, answers)) {
       continue;
     }
 
-    const sign = signMap.get(rule.signId);
+    const sign = signMap.get(effectiveRule.signId);
     if (!sign) {
       continue;
     }
 
     recommendations.push({
-      ruleId: rule.id,
+      ruleId: effectiveRule.id,
       signId: sign.id,
-      zone: rule.zone,
+      zone: effectiveRule.zone,
       signTitle: sign.title,
       signPrice: sign.price,
       signImage: sign.image,
-      level: rule.level,
-      rationale: rule.rationale,
-      sourceRef: rule.sourceRef,
-      suggestedQty: Math.max(1, Math.floor(rule.quantity(answers))),
+      level: effectiveRule.level,
+      rationale: effectiveRule.rationale,
+      sourceRef: effectiveRule.sourceRef,
+      suggestedQty: Math.max(1, Math.floor(evaluateQuantity(effectiveRule.quantity, answers))),
     });
   }
 
@@ -85,9 +95,9 @@ export function buildComplianceRecommendations(
   const subtotalEstimate = deduped.reduce((sum, rec) => sum + rec.signPrice * rec.suggestedQty, 0);
 
   const disclaimer =
-    answers.jurisdiction === "uk"
-      ? UK_BASELINE_DISCLAIMER
-      : "This ruleset is UK-oriented and should be adapted to local regulations before ordering.";
+    answers.jurisdiction === standard.jurisdiction
+      ? standard.disclaimer
+      : "Selected standard uses a different jurisdiction profile. Validate recommendations before ordering.";
 
   return {
     recommendations: deduped,
@@ -96,7 +106,73 @@ export function buildComplianceRecommendations(
     zoneSummary,
     subtotalEstimate,
     disclaimer,
+    standardName: standard.name,
+    standardVersion: standard.version,
   };
+}
+
+function applyRuleOverride(
+  rule: ComplianceRuleTemplate,
+  override?: ComplianceRuleOverride,
+): ComplianceRuleTemplate {
+  if (!override) return rule;
+  if (override.enabled === false) {
+    return {
+      ...rule,
+      trigger: { type: "all", conditions: [] },
+      quantity: { mode: "fixed", value: 0 },
+    };
+  }
+
+  return {
+    ...rule,
+    level: override.level ?? rule.level,
+    signId: override.signId ?? rule.signId,
+    quantity: override.quantity ?? rule.quantity,
+    rationale: override.rationale ?? rule.rationale,
+    sourceRef: override.sourceRef ?? rule.sourceRef,
+  };
+}
+
+function evaluateCondition(condition: Condition, answers: ComplianceAnswers): boolean {
+  switch (condition.type) {
+    case "always":
+      return true;
+    case "field-true":
+      return Boolean(answers[condition.field]);
+    case "field-equals":
+      return answers[condition.field] === condition.value;
+    case "field-in":
+      return condition.values.includes(answers[condition.field] as string | number | boolean);
+    case "all":
+      if (condition.conditions.length === 0) return false;
+      return condition.conditions.every((child) => evaluateCondition(child, answers));
+    case "any":
+      return condition.conditions.some((child) => evaluateCondition(child, answers));
+    default:
+      return false;
+  }
+}
+
+function evaluateQuantity(strategy: QuantityStrategy, answers: ComplianceAnswers): number {
+  switch (strategy.mode) {
+    case "fixed":
+      return strategy.value;
+    case "per-exit":
+      return Math.max(strategy.min ?? 1, answers.exitCount);
+    case "per-floor":
+      return Math.max(strategy.min ?? 1, answers.floorCount);
+    case "floors-plus-exits":
+      return Math.max(strategy.min ?? 1, answers.floorCount + answers.exitCount);
+    case "if-field-gte": {
+      const currentValue = Number(answers[strategy.field] ?? 0);
+      return currentValue >= strategy.threshold ? strategy.whenTrue : strategy.whenFalse;
+    }
+    case "if-boolean-field":
+      return Boolean(answers[strategy.field]) ? strategy.whenTrue : strategy.whenFalse;
+    default:
+      return 1;
+  }
 }
 
 function pickHigherLevel(a: RecommendationLevel, b: RecommendationLevel): RecommendationLevel {

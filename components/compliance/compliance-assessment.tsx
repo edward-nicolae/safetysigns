@@ -2,15 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/components/providers/cart-provider";
 import { trackEvent } from "@/lib/analytics";
 import { buildComplianceRecommendations } from "@/lib/compliance-engine";
-import type { ComplianceAnswers, ComplianceZone, SiteType } from "@/types/compliance";
+import type {
+  ComplianceAnswers,
+  ComplianceOverridesByStandard,
+  ComplianceStandard,
+  ComplianceZone,
+  SiteType,
+} from "@/types/compliance";
 import type { SignProduct } from "@/types/sign";
 
 type Props = {
   signs: SignProduct[];
+  standards: ComplianceStandard[];
+  overrides: ComplianceOverridesByStandard;
 };
 
 const INITIAL_ANSWERS: ComplianceAnswers = {
@@ -48,15 +56,43 @@ const ZONE_LABELS: Record<ComplianceZone, string> = {
   assembly: "Assembly Area",
 };
 
-export function ComplianceAssessment({ signs }: Props) {
+export function ComplianceAssessment({ signs, standards, overrides }: Props) {
   const { items, getConfiguration, setUnconfiguredQuantity } = useCart();
   const [answers, setAnswers] = useState<ComplianceAnswers>(INITIAL_ANSWERS);
   const [hasRunAssessment, setHasRunAssessment] = useState(false);
-  const [hasTrackedStart, setHasTrackedStart] = useState(false);
+  const [selectedStandardId, setSelectedStandardId] = useState(standards[0]?.id ?? "");
 
-  const result = useMemo(() => buildComplianceRecommendations(answers, signs), [answers, signs]);
+  const selectedStandard = useMemo(
+    () => standards.find((standard) => standard.id === selectedStandardId) ?? null,
+    [selectedStandardId, standards],
+  );
+
+  const result = useMemo(() => {
+    if (!selectedStandard) {
+      return null;
+    }
+
+    return buildComplianceRecommendations(
+      answers,
+      signs,
+      selectedStandard,
+      overrides[selectedStandard.id] ?? {},
+    );
+  }, [answers, signs, selectedStandard, overrides]);
+
+  const markComplianceSession = () => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("safetysigns-compliance-session", "1");
+  };
+
+  useEffect(() => {
+    trackEvent("compliance_assessment_started", { source: "page-load" });
+  }, []);
 
   const addMustHavesToCart = () => {
+    if (!result) return;
+    markComplianceSession();
+
     for (const rec of result.mustHave) {
       const existingUnconfigured = items.find(
         (item) => item.signId === rec.signId && !getConfiguration(item.lineId),
@@ -82,6 +118,9 @@ export function ComplianceAssessment({ signs }: Props) {
   };
 
   const addFullPackToCart = () => {
+    if (!result) return;
+    markComplianceSession();
+
     for (const rec of result.recommendations) {
       const existingUnconfigured = items.find(
         (item) => item.signId === rec.signId && !getConfiguration(item.lineId),
@@ -108,6 +147,12 @@ export function ComplianceAssessment({ signs }: Props) {
 
   return (
     <section className="space-y-8">
+      {!selectedStandard ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          No published compliance standard available. Add at least one standard to run assessment.
+        </div>
+      ) : null}
+
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <p className="inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
           UK Compliance Assistant
@@ -119,14 +164,22 @@ export function ComplianceAssessment({ signs }: Props) {
           Answer a few operational questions and we will generate a practical signage pack with must-have and
           recommended signs.
         </p>
+        {selectedStandard ? (
+          <p className="mt-3 text-sm text-slate-500">
+            Using standard: <strong>{selectedStandard.name}</strong> (v{selectedStandard.version})
+          </p>
+        ) : null}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <form
           onSubmit={(event) => {
             event.preventDefault();
+            if (!result || !selectedStandard) return;
             setHasRunAssessment(true);
+            markComplianceSession();
             trackEvent("compliance_assessment_completed", {
+              standardId: selectedStandard.id,
               jurisdiction: answers.jurisdiction,
               siteType: answers.siteType,
               mustHaveCount: result.mustHave.length,
@@ -137,18 +190,26 @@ export function ComplianceAssessment({ signs }: Props) {
           className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
         >
           <div>
+            <label className="block text-sm font-semibold text-slate-800">Standard Profile</label>
+            <select
+              value={selectedStandardId}
+              onChange={(e) => setSelectedStandardId(e.target.value)}
+              className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            >
+              {standards.map((standard) => (
+                <option key={standard.id} value={standard.id}>
+                  {standard.name} ({standard.version})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
             <label className="block text-sm font-semibold text-slate-800">Country Profile</label>
             <select
               value={answers.jurisdiction}
               onChange={(e) =>
-                setAnswers((prev) => {
-                  if (!hasTrackedStart) {
-                    trackEvent("compliance_assessment_started", { source: "form-first-change" });
-                    setHasTrackedStart(true);
-                  }
-
-                  return { ...prev, jurisdiction: e.target.value as ComplianceAnswers["jurisdiction"] };
-                })
+                setAnswers((prev) => ({ ...prev, jurisdiction: e.target.value as ComplianceAnswers["jurisdiction"] }))
               }
               className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
             >
@@ -232,6 +293,7 @@ export function ComplianceAssessment({ signs }: Props) {
 
           <button
             type="submit"
+            disabled={!selectedStandard}
             className="w-full rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700"
           >
             Generate Recommendation
@@ -250,13 +312,13 @@ export function ComplianceAssessment({ signs }: Props) {
             <>
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
                 <p>
-                  Must-have: <strong>{result.mustHave.length}</strong> signs
+                  Must-have: <strong>{result?.mustHave.length ?? 0}</strong> signs
                 </p>
                 <p>
-                  Recommended: <strong>{result.recommended.length}</strong> signs
+                  Recommended: <strong>{result?.recommended.length ?? 0}</strong> signs
                 </p>
                 <p>
-                  Estimated subtotal: <strong>GBP {result.subtotalEstimate.toFixed(2)}</strong>
+                  Estimated subtotal: <strong>GBP {(result?.subtotalEstimate ?? 0).toFixed(2)}</strong>
                 </p>
               </div>
 
@@ -280,12 +342,16 @@ export function ComplianceAssessment({ signs }: Props) {
               <Link
                 href="/cart"
                 className="inline-flex rounded-lg border border-brand-300 px-4 py-2 text-sm font-semibold text-brand-700 hover:bg-brand-50"
-                onClick={() =>
+                onClick={() => {
+                  if (!result || !selectedStandard) return;
+                  markComplianceSession();
                   trackEvent("compliance_go_to_cart", {
+                    standardId: selectedStandard.id,
                     mustHaveCount: result.mustHave.length,
                     recommendedCount: result.recommended.length,
-                  })
-                }
+                    source: "assessment-button",
+                  });
+                }}
               >
                 Go to Cart
               </Link>
@@ -297,7 +363,7 @@ export function ComplianceAssessment({ signs }: Props) {
       {hasRunAssessment ? (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-slate-900">Recommended Signs</h2>
-          <p className="text-sm text-slate-600">{result.disclaimer}</p>
+          <p className="text-sm text-slate-600">{result?.disclaimer ?? ""}</p>
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <h3 className="text-lg font-bold text-slate-900">Coverage by Zone</h3>
@@ -305,7 +371,7 @@ export function ComplianceAssessment({ signs }: Props) {
               Focus first on zones with highest estimated impact.
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {result.zoneSummary.map((zone) => (
+              {(result?.zoneSummary ?? []).map((zone) => (
                 <article key={zone.zone} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
                   <p className="text-sm font-semibold text-slate-900">{ZONE_LABELS[zone.zone]}</p>
                   <p className="mt-1 text-xs text-slate-600">
@@ -320,7 +386,7 @@ export function ComplianceAssessment({ signs }: Props) {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            {result.recommendations.map((rec) => (
+            {(result?.recommendations ?? []).map((rec) => (
               <article key={rec.signId} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="flex gap-4">
                   <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-slate-100">

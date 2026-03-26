@@ -2,19 +2,39 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { useCart } from "@/components/providers/cart-provider";
 
 export default function CheckoutSuccessPage() {
-  const { clearCart } = useCart();
+  const { clearCart, itemCount, subtotal } = useCart();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hasComplianceSession =
+        window.sessionStorage.getItem("safetysigns-compliance-session") === "1";
+      const alreadyTracked =
+        window.sessionStorage.getItem("safetysigns-compliance-checkout-completed") === "1";
+
+      if (hasComplianceSession && !alreadyTracked) {
+        trackEvent("compliance_checkout_completed", {
+          source: "checkout-success",
+          itemsCount: itemCount,
+          subtotal: Number(subtotal.toFixed(2)),
+        });
+        window.sessionStorage.setItem("safetysigns-compliance-checkout-completed", "1");
+      }
+    }
+
     clearCart();
     try {
       localStorage.removeItem("safetysigns-order-configuration");
+      sessionStorage.removeItem("safetysigns-compliance-session");
+      sessionStorage.removeItem("safetysigns-compliance-cart-tracked");
+      sessionStorage.removeItem("safetysigns-compliance-checkout-completed");
     } catch {
       // Ignore storage cleanup failures.
     }
-  }, [clearCart]);
+  }, [clearCart, itemCount, subtotal]);
 
   return (
     <section className="mx-auto max-w-2xl space-y-6 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">

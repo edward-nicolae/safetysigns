@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { SignCategory, SignProduct } from "@/types/sign";
 
@@ -687,12 +688,26 @@ export default function AdminPage() {
               category, and custom fields.
             </p>
           </div>
-          <button
-            onClick={() => setIsCreateOpen((prev) => !prev)}
-            className="rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
-          >
-            {isCreateOpen ? "Close New Product" : "Add New Product"}
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href="/admin/analytics"
+              className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            >
+              Analytics Dashboard
+            </Link>
+            <Link
+              href="/admin/compliance"
+              className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            >
+              Compliance Rules
+            </Link>
+            <button
+              onClick={() => setIsCreateOpen((prev) => !prev)}
+              className="rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
+            >
+              {isCreateOpen ? "Close New Product" : "Add New Product"}
+            </button>
+          </div>
         </div>
 
         {isCreateOpen ? (
