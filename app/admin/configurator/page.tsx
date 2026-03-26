@@ -347,8 +347,8 @@ function DiscountsSection({
   return (
     <div className="space-y-4">
       <p className="text-sm text-slate-500">
-        Discounts are applied by best-matching tier. Set max to blank for an open-ended "X and
-        above" tier. Tiers should be contiguous (no gaps) for predictable behaviour.
+        Discounts are applied by best-matching tier. Set max to blank for an open-ended &quot;X and
+        above&quot; tier. Tiers should be contiguous (no gaps) for predictable behaviour.
       </p>
 
       {warning && (
