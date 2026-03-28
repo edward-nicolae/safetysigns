@@ -1,21 +1,23 @@
-app = "safetysigns"
-primary_region = "otp"
+# fly.toml app configuration file generated for safetysigns on 2026-03-28T20:11:41Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'safetysigns'
+primary_region = 'ams'
 
 [build]
-  dockerfile = "Dockerfile"
-
-[env]
-  NODE_ENV = "production"
-  DATA_DIR = "/data"
-
-[[mounts]]
-  source = "safetysigns_data"
-  destination = "/data"
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 512
