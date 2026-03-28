@@ -1,13 +1,13 @@
 import { readFileSync, writeFileSync } from "fs";
-import path from "path";
 import type {
   ComplianceOverridesByStandard,
   ComplianceRuleOverride,
   ComplianceStandard,
 } from "@/types/compliance";
+import { getDataFilePath } from "@/lib/persistent-storage";
 
-const STANDARDS_PATH = path.join(process.cwd(), "data", "compliance-standards.json");
-const OVERRIDES_PATH = path.join(process.cwd(), "data", "compliance-overrides.json");
+const STANDARDS_PATH = getDataFilePath("compliance-standards.json", "[]\n");
+const OVERRIDES_PATH = getDataFilePath("compliance-overrides.json", "{}\n");
 
 export function getComplianceStandards(): ComplianceStandard[] {
   try {

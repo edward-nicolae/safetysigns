@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import path from "path";
+import { getDataFilePath } from "@/lib/persistent-storage";
 
 export type AnalyticsEvent = {
   event: string;
@@ -7,7 +7,7 @@ export type AnalyticsEvent = {
   payload: Record<string, unknown>;
 };
 
-const ANALYTICS_PATH = path.join(process.cwd(), "data", "analytics-events.json");
+const ANALYTICS_PATH = getDataFilePath("analytics-events.json", "[]\n");
 
 export type AnalyticsSummary = {
   totalEvents: number;

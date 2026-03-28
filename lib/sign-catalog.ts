@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
-import path from "path";
 import baseSigns from "@/data/signs.json";
+import { getDataFilePath } from "@/lib/persistent-storage";
 import { applyOverrides } from "@/lib/sign-overrides";
 import type { SignProduct } from "@/types/sign";
 
-const CUSTOM_SIGNS_PATH = path.join(process.cwd(), "data", "custom-signs.json");
+const CUSTOM_SIGNS_PATH = getDataFilePath("custom-signs.json", "[]\n");
 
 export function getCustomSigns(): SignProduct[] {
   try {

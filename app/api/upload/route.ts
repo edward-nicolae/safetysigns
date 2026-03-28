@@ -1,5 +1,7 @@
-import { put } from "@vercel/blob";
+import { writeFile } from "fs/promises";
+import path from "path";
 import { NextResponse } from "next/server";
+import { getUploadsDir, uploadSegmentsToUrl } from "@/lib/persistent-storage";
 
 const MAX_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/png", "image/jpeg", "image/svg+xml"]);
@@ -24,13 +26,15 @@ export async function POST(request: Request) {
   const fileName = `${Date.now()}-${safeName}`;
 
   try {
-    const blob = await put(fileName, file, {
-      access: "public",
-    });
+    const uploadsDir = getUploadsDir();
+    const absolutePath = path.join(uploadsDir, fileName);
+    const fileBytes = new Uint8Array(await file.arrayBuffer());
 
-    return NextResponse.json({ url: blob.url }, { status: 200 });
+    await writeFile(absolutePath, fileBytes);
+
+    return NextResponse.json({ url: uploadSegmentsToUrl(fileName) }, { status: 200 });
   } catch (error) {
-    console.error("Blob upload failed:", error);
+    console.error("Logo upload failed:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }

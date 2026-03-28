@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
-import path from "path";
 import type { SignProduct } from "@/types/sign";
+import { getDataFilePath } from "@/lib/persistent-storage";
 
 // ── Image overrides ────────────────────────────────────────────────────────────
 
-const IMAGE_OVERRIDES_PATH = path.join(process.cwd(), "data", "sign-image-overrides.json");
+const IMAGE_OVERRIDES_PATH = getDataFilePath("sign-image-overrides.json", "{}\n");
 
 export function getSignImageOverrides(): Record<string, string> {
   try {
@@ -23,7 +23,7 @@ export function writeSignImageOverrides(data: Record<string, string>): void {
 export type SignDataOverride = Partial<Omit<SignProduct, "id" | "image">> &
   Record<string, unknown>;
 
-const DATA_OVERRIDES_PATH = path.join(process.cwd(), "data", "sign-data-overrides.json");
+const DATA_OVERRIDES_PATH = getDataFilePath("sign-data-overrides.json", "{}\n");
 
 export function getSignDataOverrides(): Record<string, SignDataOverride> {
   try {

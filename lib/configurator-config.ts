@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
-import path from "path";
+import { getDataFilePath } from "@/lib/persistent-storage";
 
 export type ConfiguratorMaterial = {
   id: string;
@@ -38,7 +38,7 @@ export type ConfiguratorSettings = {
   colorSchemes: ConfiguratorColorScheme[];
 };
 
-const DATA_PATH = path.join(process.cwd(), "data", "configurator-settings.json");
+const DATA_PATH = getDataFilePath("configurator-settings.json", "{}\n");
 
 export function getConfiguratorSettings(): ConfiguratorSettings {
   const raw = readFileSync(DATA_PATH, "utf-8");
